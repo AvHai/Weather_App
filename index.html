@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="heading">
+        <h1>Weather App</h1>
+        <p id="sub"> "Groovin' through the forecast, where every day is a weather fiesta!"</p>
+    </div>
+
+    <div class="city">
+        <form id="weatherForm">
+            <label for="city">Enter City:</label>
+            <input type="text" id="city" name="city" placeholder=" City Name " required>
+            <br>
+            <input type="button" value="Submit" onclick="submitForm()">
+        </form>
+    </div>
+    
+    <div id="result-container" style="display: none;">
+        <!-- Result content will be displayed here -->
+    </div>
+    
+    <script>
+        async function submitForm() {
+            const cityInput = document.getElementById('city').value;
+    
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `city=${cityInput}`
+            });
+    
+            const result = await response.text();
+    
+            // Hide the form and show the result container
+            document.getElementById('weatherForm').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+    
+            document.getElementById('result-container').innerHTML = result;
+        }
+    </script>
+</body>
+</html>
